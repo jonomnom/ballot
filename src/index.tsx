@@ -1,14 +1,35 @@
-import ReactDOM from 'react-dom/client'
+import ReactDOM from "react-dom/client";
 import "./styles/tailwind.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import React from 'react';
+import React from "react";
+import {
+  Mainnet,
+  DAppProvider,
+  useEtherBalance,
+  useEthers,
+  Config,
+  Goerli,
+  Mumbai,
+} from "@usedapp/core";
+import { ethers, getDefaultProvider } from "ethers";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const config: Config = {
+  readOnlyChainId: Mumbai.chainId,
+  readOnlyUrls: {
+    [Mumbai.chainId]: new ethers.providers.JsonRpcProvider(Mumbai.rpcUrl),
+  },
+  refresh: "everyBlock",
+  gasLimitBufferPercentage: 10,
+};
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <DAppProvider config={config}>
+      <App />
+    </DAppProvider>
   </React.StrictMode>
-)
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
