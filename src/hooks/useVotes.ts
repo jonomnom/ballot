@@ -1,8 +1,6 @@
-import { useCall, useContractFunction, useEthers } from "@usedapp/core";
+import { useCall, useContractFunction } from "@usedapp/core";
 import { BigNumber } from "ethers";
-import { useEffect } from "react";
 import useBallot from "./useBallot";
-import useStatus from "./useStatus";
 
 export const useVoterMetadata = (addr: string | undefined) => {
   const contract = useBallot();

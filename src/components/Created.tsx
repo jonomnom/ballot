@@ -1,10 +1,5 @@
-import autoAnimate from "@formkit/auto-animate";
-import { animateScroll as scroll } from "react-scroll";
-import { ReactPropTypes, useEffect, useRef, useState } from "react";
-import { X } from "react-feather";
-import useBallot from "../hooks/useBallot";
-import { useCall, useEthers, useSendTransaction } from "@usedapp/core";
-import { useAddCandidates } from "../hooks/useCandidates";
+import { useEthers } from "@usedapp/core";
+import { useEffect } from "react";
 import { useStartVote } from "../hooks/useVotes";
 // TODO: eslint warnings
 const Created: React.FC<{
@@ -14,7 +9,7 @@ const Created: React.FC<{
 }> = ({ candidates, chairperson, nextStatus }) => {
   const { account } = useEthers();
 
-  const isAdmin = account == chairperson;
+  const isAdmin = account === chairperson;
   const { send: startVote, state: startVoteState } = useStartVote();
   const handleStartVote = () => {
     try {
@@ -29,7 +24,7 @@ const Created: React.FC<{
     if (startVoteState.status === "Success") {
       nextStatus();
     }
-  }, [startVoteState.status]);
+  }, [startVoteState.status, nextStatus]);
 
   return (
     <div className="flex flex-col items-center justify-center text-white  gap-4 px-4 w-full max-w-2xl">
@@ -41,8 +36,8 @@ const Created: React.FC<{
           className="bg-teal-300 p-3 px-5 rounded-sm w-full text-black disabled:bg-slate-600"
           disabled={
             !isAdmin ||
-            startVoteState.status == "PendingSignature" ||
-            startVoteState.status == "Mining"
+            startVoteState.status === "PendingSignature" ||
+            startVoteState.status === "Mining"
           }
           onClick={() => handleStartVote()}
         >

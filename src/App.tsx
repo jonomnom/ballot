@@ -1,26 +1,12 @@
-import autoAnimate from "@formkit/auto-animate";
-import { animateScroll as scroll } from "react-scroll";
-import { useEffect, useRef, useState } from "react";
-import { X } from "react-feather";
+import { Mumbai, shortenIfAddress, useEthers } from "@usedapp/core";
 import Created from "./components/Created";
-import {
-  CallResult,
-  Mumbai,
-  shortenAddress,
-  shortenIfAddress,
-  useCall,
-  useEtherBalance,
-  useEthers,
-} from "@usedapp/core";
-import useBallot from "./hooks/useBallot";
-import { formatStatus } from "./utils/format";
+import Ended from "./components/Ended";
+import Tabs from "./components/Tabs";
+import Voting from "./components/Voting";
+import useCandidates from "./hooks/useCandidates";
 import useChairperson from "./hooks/useChairperson";
 import useStatus from "./hooks/useStatus";
-import useCandidates from "./hooks/useCandidates";
-import Voting from "./components/Voting";
-import Ended from "./components/Ended";
-import Voters from "./components/Voters";
-import Tabs from "./components/Tabs";
+import { formatStatus } from "./utils/format";
 
 export enum Status {
   Created,
@@ -37,7 +23,7 @@ function App() {
     useChairperson() ?? {};
 
   const chairperson = (chairperson1 && chairperson1[0]) || "";
-  const { data: status, loading, error, nextStatus } = useStatus();
+  const { data: status, loading, nextStatus } = useStatus();
   const candidates = useCandidates();
   //   TODO: error handling of wallet  https://usedapp-docs.netlify.app/docs/Guides/Connecting/Handling%20Errors
   // you need to have an account in order for chain id to appear

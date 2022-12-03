@@ -1,8 +1,6 @@
 import { Call, useCall, useCalls, useContractFunction } from "@usedapp/core";
 import { BigNumber } from "ethers";
-import { useEffect } from "react";
 import useBallot from "./useBallot";
-import useStatus from "./useStatus";
 
 export default function useCandidates(): Array<Candidate> {
   const contract = useBallot();
@@ -54,7 +52,6 @@ export const useAddCandidates = () => {
 
 export const useWinningVote = () => {
   const contract = useBallot();
-  const candidates = useCandidates();
   // TODO: loading state
   // REFACTOR: use multicall
   const winningVoteRes = useCall({

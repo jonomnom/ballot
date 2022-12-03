@@ -1,16 +1,6 @@
-import autoAnimate from "@formkit/auto-animate";
-import { animateScroll as scroll } from "react-scroll";
-import { ReactPropTypes, useEffect, useRef, useState } from "react";
-import { X } from "react-feather";
-import useBallot from "../hooks/useBallot";
-import { useCall, useEthers, useSendTransaction } from "@usedapp/core";
-import { useAddCandidates } from "../hooks/useCandidates";
-import {
-  useChooseVote,
-  useEndVote,
-  useStartVote,
-  useVoterMetadata,
-} from "../hooks/useVotes";
+import { useEthers } from "@usedapp/core";
+import { useEffect } from "react";
+import { useChooseVote, useEndVote, useVoterMetadata } from "../hooks/useVotes";
 // TODO: eslint warnings
 const Voting: React.FC<{
   candidates: Candidate[];
@@ -19,9 +9,9 @@ const Voting: React.FC<{
 }> = ({ candidates, chairperson, nextStatus }) => {
   const { account } = useEthers();
   const { send: chooseVote } = useChooseVote();
-  const isAdmin = account == chairperson;
+  const isAdmin = account === chairperson;
   const { send: endVote, state: endVoteState } = useEndVote();
-  const { data: voter, error: voterMetadataError } = useVoterMetadata(account);
+  const { data: voter } = useVoterMetadata(account);
   //TODO: if voter, they should be able to vote, IF they haven't voted
 
   const handleEndVote = () => {
@@ -37,7 +27,7 @@ const Voting: React.FC<{
     if (endVoteState.status === "Success") {
       nextStatus();
     }
-  }, [endVoteState.status]);
+  }, [endVoteState.status, nextStatus]);
   const handleVote = async (candidateIndex: number) => {
     try {
       chooseVote(candidateIndex);
@@ -52,8 +42,8 @@ const Voting: React.FC<{
           className="bg-teal-300 p-3 px-5 rounded-sm w-full text-black disabled:bg-slate-600"
           disabled={
             !isAdmin ||
-            endVoteState.status == "PendingSignature" ||
-            endVoteState.status == "Mining"
+            endVoteState.status === "PendingSignature" ||
+            endVoteState.status === "Mining"
           }
           onClick={() => handleEndVote()}
         >
@@ -62,7 +52,7 @@ const Voting: React.FC<{
       ) : null}
       {voter ? (
         <p className="text-xs text-gray-400">
-          {!voter || voter.weight == 0
+          {!voter || voter.weight === 0
             ? "You are not eligible to vote. Talk with the chairperson to get access."
             : voter.voted === true
             ? "Thank you for submitting your vote. Awaiting chairperson to end voting."

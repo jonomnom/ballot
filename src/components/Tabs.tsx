@@ -1,7 +1,7 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { useEthers } from "@usedapp/core";
 import cx from "classnames";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Voters from "./Voters";
 
 interface Tab {
@@ -33,7 +33,6 @@ const Tabs: React.FC<{
           value: "tab1",
         },
       ];
-  const [tabValue, setTabValue] = useState<string>();
   return (
     <TabsPrimitive.Root
       defaultValue="tab1"

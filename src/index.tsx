@@ -1,18 +1,10 @@
+import { Config, DAppProvider, Mumbai } from "@usedapp/core";
+import { ethers } from "ethers";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import "./styles/tailwind.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import React from "react";
-import {
-  Mainnet,
-  DAppProvider,
-  useEtherBalance,
-  useEthers,
-  Config,
-  Goerli,
-  Mumbai,
-} from "@usedapp/core";
-import { ethers, getDefaultProvider } from "ethers";
+import "./styles/tailwind.css";
 
 const config: Config = {
   readOnlyChainId: Mumbai.chainId,

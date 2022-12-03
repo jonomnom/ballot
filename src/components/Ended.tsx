@@ -1,8 +1,6 @@
-import { animateScroll as scroll } from "react-scroll";
-import { ReactPropTypes, useEffect, useRef, useState } from "react";
+import { useEthers } from "@usedapp/core";
+import { useEffect, useState } from "react";
 import { X } from "react-feather";
-import useBallot from "../hooks/useBallot";
-import { useCall, useEthers, useSendTransaction } from "@usedapp/core";
 import { useAddCandidates, useWinningVote } from "../hooks/useCandidates";
 
 const Ended: React.FC<{
@@ -18,11 +16,7 @@ const Ended: React.FC<{
    */
   const [newCandidates, setNewCandidates] = useState<Array<string>>([]);
   const [newCandidate, setNewCandidate] = useState<string>("");
-  const {
-    loading: winningVoteLoading,
-    data: winningVote,
-    error,
-  } = useWinningVote();
+  const { loading: winningVoteLoading, data: winningVote } = useWinningVote();
   const { account } = useEthers();
   const isAdmin = chairperson === account;
   // TODO:
@@ -58,7 +52,7 @@ const Ended: React.FC<{
     if (addCandidatesState.status === "Success") {
       nextStatus();
     }
-  }, [addCandidatesState.status]);
+  }, [addCandidatesState.status, nextStatus]);
 
   if (winningVoteLoading) {
     <p>Loading winners</p>;
@@ -97,8 +91,8 @@ const Ended: React.FC<{
             onClick={() => handleAddCandidates()}
             disabled={
               newCandidates.length === 0 ||
-              addCandidatesState.status == "PendingSignature" ||
-              addCandidatesState.status == "Mining"
+              addCandidatesState.status === "PendingSignature" ||
+              addCandidatesState.status === "Mining"
             }
           >
             Admin: Save new candidates {`(${newCandidates.length})`} for next

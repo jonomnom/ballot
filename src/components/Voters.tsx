@@ -1,14 +1,13 @@
-import { useGiveRightToVote, useVoterMetadata } from "../hooks/useVotes";
-import { animateScroll as scroll } from "react-scroll";
+import { useEthers } from "@usedapp/core";
 import { useState } from "react";
 import useDebounce from "../hooks/useDebounce";
-import { useEthers } from "@usedapp/core";
+import { useGiveRightToVote, useVoterMetadata } from "../hooks/useVotes";
 
 // TODO : admin only permissions
 const Voters: React.FC<{ chairperson: string }> = ({ chairperson }) => {
   const { send: giveRightToVote, state } = useGiveRightToVote();
   const loadingTx =
-    state.status == "PendingSignature" || state.status == "Mining";
+    state.status === "PendingSignature" || state.status === "Mining";
   const { account } = useEthers();
   const [newVoter, setNewVoter] = useState<string>("");
   const newVoterDebounce = useDebounce(newVoter, 1000);

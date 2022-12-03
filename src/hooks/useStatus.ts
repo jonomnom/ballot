@@ -18,7 +18,7 @@ export default function useStatus() {
     if (res?.value && res.value[0] !== undefined && localStatus === undefined) {
       setLocalStatus(res.value[0]);
     }
-  }, [res?.value]);
+  }, [res?.value, localStatus]);
   return {
     loading: res === undefined,
     data: localStatus,
