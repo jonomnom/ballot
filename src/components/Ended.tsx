@@ -2,14 +2,14 @@ import { animateScroll as scroll } from "react-scroll";
 import { ReactPropTypes, useEffect, useRef, useState } from "react";
 import { X } from "react-feather";
 import useBallot from "../hooks/useBallot";
-import { useCall, useSendTransaction } from "@usedapp/core";
+import { useCall, useEthers, useSendTransaction } from "@usedapp/core";
 import { useAddCandidates, useWinningVote } from "../hooks/useCandidates";
 
 const Ended: React.FC<{
   candidates: Candidate[];
   chairperson: string;
   nextStatus: () => void;
-}> = ({ candidates, nextStatus }) => {
+}> = ({ candidates, nextStatus, chairperson }) => {
   const { send: addCandidates, state: addCandidatesState } = useAddCandidates();
   /* NOTE: Normally, if the contract has a feature like delegation but there isn't actually a way to change it 
   (not meaningful), I would consult with the team if this is a future feature. If it was a future feature, `voters`
@@ -23,7 +23,8 @@ const Ended: React.FC<{
     data: winningVote,
     error,
   } = useWinningVote();
-  const isAdmin = true;
+  const { account } = useEthers();
+  const isAdmin = chairperson === account;
   // TODO:
   const winners = candidates.filter(({ name }) => name === winningVote);
   const losers = candidates
