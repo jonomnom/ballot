@@ -16,7 +16,7 @@ const Tabs: React.FC<{
   const { account } = useEthers();
   const isAdmin = chairperson === account;
 
-  const tabs: Tab[] = isAdmin
+  const tabs: Tab[] = true
     ? [
         {
           title: "General",

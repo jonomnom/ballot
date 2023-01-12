@@ -1,5 +1,5 @@
 import { useEthers } from "@usedapp/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
 import { useGiveRightToVote, useVoterMetadata } from "../hooks/useVotes";
 
@@ -25,9 +25,12 @@ const Voters: React.FC<{ chairperson: string }> = ({ chairperson }) => {
     setNewVoter("");
     // TODO: scroll.scrollToBottom();
   };
-  if (chairperson !== account) {
-    return null;
-  }
+  // if (chairperson !== account) {
+  //   return null;
+  // }
+  useEffect(() => {
+    console.warn(state);
+  }, [state]);
   return (
     // TODO: refactor into formik
     <form className="flex flex-col" onSubmit={(e) => handleAddVoter(e)}>

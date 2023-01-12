@@ -60,7 +60,7 @@ const Ended: React.FC<{
   return (
     <div className="flex flex-col items-center justify-center text-white gap-4 px-4 w-full max-w-2xl">
       {/* TODO: admin view vs not admin view */}
-      {isAdmin ? (
+      {true ? (
         <>
           <div className="flex flex-row justify-between bg-slate-600 p-3 rounded-sm min-w-full">
             {/* TODO: form validation - empty strings, strings too long*/}
