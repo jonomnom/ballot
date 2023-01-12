@@ -6,8 +6,6 @@ import { useGiveRightToVote, useVoterMetadata } from "../hooks/useVotes";
 // TODO : admin only permissions
 const Voters: React.FC<{ chairperson: string }> = ({ chairperson }) => {
   const { send: giveRightToVote, state } = useGiveRightToVote();
-  const loadingTx =
-    state.status === "PendingSignature" || state.status === "Mining";
   const { account } = useEthers();
   const [newVoter, setNewVoter] = useState<string>("");
   const newVoterDebounce = useDebounce(newVoter, 1000);
@@ -55,18 +53,10 @@ const Voters: React.FC<{ chairperson: string }> = ({ chairperson }) => {
           (newVoter !== newVoterDebounce && newVoter !== "")
             ? "Validating user..."
             : errorVoterMetadata
-            ? "Invalid address"
-            : data && data.weight > 0
             ? "Already a voter"
             : "Add Voter"
         }
-        disabled={
-          loadingVoterMetadata ||
-          (newVoter !== newVoterDebounce && newVoter !== "") ||
-          errorVoterMetadata !== undefined ||
-          (data && data.weight > 0) ||
-          loadingTx
-        }
+        disabled={false}
         className="bg-teal-300 rounded-sm text-black hover:cursor-pointer p-3 disabled:bg-slate-600"
       />
     </form>

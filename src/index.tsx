@@ -1,4 +1,4 @@
-import { Config, DAppProvider, Mumbai } from "@usedapp/core";
+import { ChainId, Config, DAppProvider } from "@usedapp/core";
 import { ethers } from "ethers";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -7,12 +7,12 @@ import * as serviceWorker from "./serviceWorker";
 import "./styles/tailwind.css";
 
 const config: Config = {
-  readOnlyChainId: Mumbai.chainId,
-  readOnlyUrls: {
-    [Mumbai.chainId]: new ethers.providers.JsonRpcProvider(Mumbai.rpcUrl),
-  },
-  refresh: "everyBlock",
-  gasLimitBufferPercentage: 10,
+  readOnlyChainId: ChainId.Mumbai,
+  // readOnlyUrls: {
+  //   [Mumbai.chainId]: new ethers.providers.JsonRpcProvider(Mumbai.rpcUrl),
+  // },
+  // refresh: "everyBlock",
+  // gasLimitBufferPercentage: 10,
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
